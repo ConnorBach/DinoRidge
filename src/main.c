@@ -14,7 +14,7 @@ int main() {
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);    // Window configuration flags
 	InitWindow(screenWidth, screenHeight, "Dino Ridge");
 
-    //InitAudioDevice();
+    InitAudioDevice();
 
 	SetTargetFPS(60);               
 

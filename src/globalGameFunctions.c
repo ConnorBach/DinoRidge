@@ -31,8 +31,8 @@ GameState *InitGameState() {
 	purpleRexTexture = LoadTexture("../assets/dino4.png");
 
     // load and start music
-    //chaseMusic = LoadMusicStream("../assets/ChaseMusic.ogg");
-    //PlayMusicStream(chaseMusic);
+    chaseMusic = LoadMusicStream("../assets/ChaseMusic.ogg");
+    PlayMusicStream(chaseMusic);
 
 	// setup game state
 	GameState *state = malloc(sizeof(GameState));
@@ -46,8 +46,6 @@ GameState *InitGameState() {
 	}
 	state->dinos = dinos;
 
-    InitAudioDevice();
-
 	return state;
 }
 
@@ -58,7 +56,7 @@ void Update(GameState *state) {
     screenHeight = GetScreenHeight();
 
     /* Update music */
-    //UpdateMusicStream(chaseMusic);
+    UpdateMusicStream(chaseMusic);
 
 	/* read user input, update player position */
 	if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) state->player->x += 2.0f;
