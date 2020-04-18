@@ -20,7 +20,9 @@ Texture2D purpleRexTexture;
  * */
 GameState *InitGameState() {
 	//load textures 
-	playerTexture = LoadTexture("../assets/PlayerCharacter.png");
+    Image playerImage = LoadImage("../assets/PlayerCharacter.png");
+    ImageResize(&playerImage, playerImage.width*.4, playerImage.height*.4);
+	playerTexture = LoadTextureFromImage(playerImage);
 	greenRaptorTexture = LoadTexture("../assets/dino1.png");
 	blueRaptorTexture = LoadTexture("../assets/dino2.png");
 	orangeBrontTexture= LoadTexture("../assets/dino3.png");
