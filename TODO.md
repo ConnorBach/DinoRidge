@@ -8,7 +8,7 @@
 * score (based on time) (DONE)
 * hp bar (DONE)
 * play/pause music (DONE)
-* add dino chase AI
+* add dino chase AI (DONE)
 * add damage for collisions
 * menu for character selection
 

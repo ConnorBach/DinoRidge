@@ -15,6 +15,8 @@ Dino *dinoCreate(size_t x, size_t y, DinoType type) {
 
     Vector2 dst = { GetRandomValue(0, screenWidth), GetRandomValue(0, screenHeight) };
     dino->greenRaptorDest = dst;
+
+    dino->bounds = dinoGetRectangles(dino);
     return dino;
 }
 
@@ -93,4 +95,83 @@ void dinoMove(Dino *dino, Vector2 point) {
 
     dino->x += dirX;
     dino->y += dirY;
+}
+
+Rectangle **dinoGetRectangles(Dino *d) {
+    Rectangle **bounds = malloc(sizeof(Rectangle*)*3);
+    Rectangle *body = malloc(sizeof(Rectangle));
+    Rectangle *head = malloc(sizeof(Rectangle));
+    Rectangle *tail = malloc(sizeof(Rectangle));
+
+    switch(d->type) {
+        case GreenRaptor:
+            head->x = d->x + 50;
+            head->y = d->y + 20;
+            head->width = 100;
+            head->height = 60;
+
+            body->x = d->x + 50;
+            body->y = d->y + 20;
+            body->width = 50;
+            body->height = 120;
+
+            tail->x = d->x + 10;
+            tail->y = d->y + 80;
+            tail->width = 50;
+            tail->height = 50;
+            break;
+        case BlueRaptor:
+            head->x = d->x + 50;
+            head->y = d->y + 20;
+            head->width = 100;
+            head->height = 60;
+
+            body->x = d->x + 50;
+            body->y = d->y + 20;
+            body->width = 50;
+            body->height = 120;
+
+            tail->x = d->x + 10;
+            tail->y = d->y + 80;
+            tail->width = 50;
+            tail->height = 50;
+            break;
+        case OrangeBront:
+            head->x = d->x + 130;
+            head->y = d->y + 10;
+            head->width = 110;
+            head->height = 60;
+
+            body->x = d->x + 130;
+            body->y = d->y + 60;
+            body->width = 50;
+            body->height = 180;
+
+            tail->x = d->x + 20;
+            tail->y = d->y + 140;
+            tail->width = 150;
+            tail->height = 100;
+            break;
+        case PurpleRex:
+            head->x = d->x + 130;
+            head->y = d->y + 10;
+            head->width = 110;
+            head->height = 60;
+
+            body->x = d->x + 100;
+            body->y = d->y + 60;
+            body->width = 80;
+            body->height = 180;
+
+            tail->x = d->x + 20;
+            tail->y = d->y + 150;
+            tail->width = 130;
+            tail->height = 40;
+            break;
+    }
+
+    bounds[0] = head;
+    bounds[1] = body;
+    bounds[2] = tail;
+    return bounds;
 }

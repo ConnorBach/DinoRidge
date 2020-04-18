@@ -44,6 +44,7 @@ GameState *InitGameState() {
     //printf(" ====== %d %d ======\n", screenWidth, screenHeight);
 	Player *p = playerCreate(screenWidth / 2, screenHeight/ 2, 100, 100);
 	state->player = p;
+    playerUpdatePercentHP(p);
 
 	Dino **dinos = malloc(sizeof(Dino) * n_dinos);
 	for(int i = 0; i < n_dinos; i++) {
@@ -99,7 +100,32 @@ void Update(GameState *state) {
     }
 
     /* check for collisions, lower player hp */
-    playerUpdatePercentHP(state->player);
+    for(int i = 0; i < n_dinos; i++) {
+        Rectangle *playerRect = playerGetRectangle(state->player);
+        Rectangle **dinoRects = dinoGetRectangles(dinos[i]);
+        for(int j = 0; j < 3; j++) {
+            Rectangle *dinoRect = dinoRects[j];
+            if(CheckCollisionRecs(*playerRect, *dinoRect)) {
+                int dmg = 0;
+                switch(dinos[i]->type) {
+                    case GreenRaptor:
+                        dmg -= 5;
+                        break;
+                    case BlueRaptor:
+                        dmg -= 10;
+                        break;
+                    case OrangeBront:
+                        dmg -= 40;
+                        break;
+                    case PurpleRex:
+                        dmg -= 60;
+                        break;
+                }
+                playerUpdateHP(state->player, dmg);
+                playerUpdatePercentHP(state->player);
+            }
+        }
+    }
 
 
     /* update score */
@@ -138,6 +164,12 @@ void Draw(GameState *state) {
         }
 
         DrawTexture(dinoTexture, dinos[i]->x, dinos[i]->y, RAYWHITE);
+
+        Rectangle **recs = dinoGetRectangles(dinos[i]);
+        for(int i = 0; i < 3; i++) {
+            Rectangle *r = recs[i];
+            DrawRectangle(r->x, r->y, r->width, r->height,  BLUE);
+        }
     }
 
     //EndMode2D();

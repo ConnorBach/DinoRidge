@@ -17,7 +17,8 @@ typedef struct Dino {
     size_t home_x;
     size_t home_y;
     Vector2 greenRaptorDest;
-    enum DinoType type;
+    DinoType type;
+    Rectangle **bounds;
 } Dino;
 
 Dino *dinoCreate(size_t x, size_t y, DinoType type);
@@ -28,5 +29,6 @@ void blueRaptorChase(Dino *dino, Player *player);
 void orangeBrontChase(Dino *dino, Player *player);
 void purpleRexChase(Dino *dino, Player *player);
 void dinoMove(Dino *dino, Vector2 point);
+Rectangle **dinoGetRectangles(Dino *d);
 
 #endif
