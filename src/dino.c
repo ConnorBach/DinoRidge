@@ -175,3 +175,10 @@ Rectangle **dinoGetRectangles(Dino *d) {
     bounds[2] = tail;
     return bounds;
 }
+
+void dinoFree(Dino *d) {
+    for(int i = 0; i < 3; i++) {
+        free(d->bounds[i]);
+    }
+    free(d);
+}

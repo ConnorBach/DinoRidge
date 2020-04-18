@@ -29,6 +29,7 @@ void blueRaptorChase(Dino *dino, Player *player);
 void orangeBrontChase(Dino *dino, Player *player);
 void purpleRexChase(Dino *dino, Player *player);
 void dinoMove(Dino *dino, Vector2 point);
+void dinoFree(Dino *dino);
 Rectangle **dinoGetRectangles(Dino *d);
 
 #endif

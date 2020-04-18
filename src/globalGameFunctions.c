@@ -40,6 +40,7 @@ GameState *InitGameState() {
 
 	// setup game state
 	GameState *state = malloc(sizeof(GameState));
+    state->gameOver = 0;
 
     //printf(" ====== %d %d ======\n", screenWidth, screenHeight);
 	Player *p = playerCreate(screenWidth / 2, screenHeight/ 2, 100, 100);
@@ -87,8 +88,9 @@ void Update(GameState *state) {
 	if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) state->player->y -= 2.0f;
 	if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) state->player->y += 2.0f;
 
-    if(IsKeyDown(KEY_J)) playerUpdateHP(state->player, -5);
-    if(IsKeyDown(KEY_K)) playerUpdateHP(state->player, 5);
+    if(IsKeyDown(KEY_SPACE) && state->gameOver == 1) {
+        Reset(state);
+    }
 
     state->player->bound = playerGetRectangle(state->player);
 
@@ -126,6 +128,10 @@ void Update(GameState *state) {
                 }
                 playerUpdateHP(state->player, dmg);
                 playerUpdatePercentHP(state->player);
+
+                if(state->player->hp == 0) {
+                    state->gameOver = 1;
+                }
             }
         }
     }
@@ -137,47 +143,50 @@ void Update(GameState *state) {
 
 /* Draw Game state */
 void Draw(GameState *state) {
-
     /* Render */
 	BeginDrawing();
 
 	ClearBackground(GREEN);
 
-    //BeginMode2D(camera);
+    if(state->gameOver) {
+        DrawText("Game Over: Press Space to restart", .15 * screenWidth, .5 * screenHeight, 40, BLACK);
+    } else {
+        //BeginMode2D(camera);
 
-	Player *player = state->player;
-	DrawTexture(playerTexture, player->x, player->y, RAYWHITE);
-    Rectangle *bound = state->player->bound;
-    DrawRectangle(bound->x, bound->y, bound->width, bound->height, RED);
+        Player *player = state->player;
+        DrawTexture(playerTexture, player->x, player->y, RAYWHITE);
+        Rectangle *bound = state->player->bound;
+        DrawRectangle(bound->x, bound->y, bound->width, bound->height, RED);
 
-    Dino **dinos = state->dinos;
-    for(int i = 0; i < n_dinos; i++) {
-        Texture2D dinoTexture;
-        switch(dinos[i]->type) {
-            case GreenRaptor:
-                dinoTexture = greenRaptorTexture;
-                break;
-            case BlueRaptor:
-                dinoTexture = blueRaptorTexture;
-                break;
-            case OrangeBront:
-                dinoTexture = orangeBrontTexture;
-                break;
-            case PurpleRex:
-                dinoTexture = purpleRexTexture;
-                break;
+        Dino **dinos = state->dinos;
+        for(int i = 0; i < n_dinos; i++) {
+            Texture2D dinoTexture;
+            switch(dinos[i]->type) {
+                case GreenRaptor:
+                    dinoTexture = greenRaptorTexture;
+                    break;
+                case BlueRaptor:
+                    dinoTexture = blueRaptorTexture;
+                    break;
+                case OrangeBront:
+                    dinoTexture = orangeBrontTexture;
+                    break;
+                case PurpleRex:
+                    dinoTexture = purpleRexTexture;
+                    break;
+            }
+
+            DrawTexture(dinoTexture, dinos[i]->x, dinos[i]->y, RAYWHITE);
+
+            Rectangle **recs = dinos[i]->bounds;
+            for(int i = 0; i < 3; i++) {
+                Rectangle *r = recs[i];
+                DrawRectangle(r->x, r->y, r->width, r->height,  BLUE);
+            }
         }
 
-        DrawTexture(dinoTexture, dinos[i]->x, dinos[i]->y, RAYWHITE);
-
-        Rectangle **recs = dinos[i]->bounds;
-        for(int i = 0; i < 3; i++) {
-            Rectangle *r = recs[i];
-            DrawRectangle(r->x, r->y, r->width, r->height,  BLUE);
-        }
+        //EndMode2D();
     }
-
-    //EndMode2D();
     
     /* Draw UI */
 
@@ -208,4 +217,30 @@ void CleanUp(GameState *state) {
     //CloseAudioDevice();
 
     /* clean up game state */
+}
+
+/* restarts game */
+void Reset(GameState *state) {
+	// setup game state
+    state->gameOver = 0;
+
+    // reset player
+    state->player->x = screenWidth / 2;
+    state->player->y = screenHeight / 2;
+    playerUpdateHP(state->player, 100);
+    playerUpdatePercentHP(state->player);
+
+    // reset dinos
+	for(int i = 0; i < n_dinos; i++) {
+        dinoFree(state->dinos[i]);
+    }
+
+    // new random dinos
+	Dino **dinos = malloc(sizeof(Dino) * n_dinos);
+	for(int i = 0; i < n_dinos; i++) {
+		dinos[i] = dinoCreate(GetRandomValue(0, 800), GetRandomValue(0, 450), GetRandomValue(0, 3));
+	}
+	state->dinos = dinos;
+
+    state->score = 0;
 }

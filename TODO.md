@@ -10,7 +10,7 @@
 * play/pause music (DONE)
 * add dino chase AI (DONE)
 * add damage for collisions (DONE)
-* menu for character selection
+
 * Game Over / Start Again
 
 * bigger world
@@ -21,6 +21,7 @@
 * add more dinos or increase dino speed
 * animate sprites
 * sound effects for collisions
+* menu for character selection
 
 ## Deploying
 Compile on Windows
