@@ -6,6 +6,7 @@ Player *playerCreate(int x, int y, int hp, int max_hp) {
     p->y =  y;
     p->hp = hp;
     p->max_hp = max_hp;
+    p->bound = playerGetRectangle(p);
     return p;
 }
 

@@ -18,6 +18,7 @@ typedef struct Player {
     int max_hp;
     float percent_hp;
     PlayerType type;
+    Rectangle *bound;
 } Player;
 
 Player *playerCreate(int x, int y, int hp, int max_hp);

@@ -90,6 +90,8 @@ void Update(GameState *state) {
     if(IsKeyDown(KEY_J)) playerUpdateHP(state->player, -5);
     if(IsKeyDown(KEY_K)) playerUpdateHP(state->player, 5);
 
+    state->player->bound = playerGetRectangle(state->player);
+
     /* have camera follow player */
 
     /* update dino position */
@@ -97,12 +99,13 @@ void Update(GameState *state) {
 
     for(int i = 0; i < n_dinos; i++) {
         dinoChase(dinos[i], state->player); 
+        dinos[i]->bounds = dinoGetRectangles(dinos[i]);
     }
 
     /* check for collisions, lower player hp */
     for(int i = 0; i < n_dinos; i++) {
-        Rectangle *playerRect = playerGetRectangle(state->player);
-        Rectangle **dinoRects = dinoGetRectangles(dinos[i]);
+        Rectangle *playerRect = state->player->bound;
+        Rectangle **dinoRects = dinos[i]->bounds;
         for(int j = 0; j < 3; j++) {
             Rectangle *dinoRect = dinoRects[j];
             if(CheckCollisionRecs(*playerRect, *dinoRect)) {
@@ -144,6 +147,8 @@ void Draw(GameState *state) {
 
 	Player *player = state->player;
 	DrawTexture(playerTexture, player->x, player->y, RAYWHITE);
+    Rectangle *bound = state->player->bound;
+    DrawRectangle(bound->x, bound->y, bound->width, bound->height, RED);
 
     Dino **dinos = state->dinos;
     for(int i = 0; i < n_dinos; i++) {
@@ -165,7 +170,7 @@ void Draw(GameState *state) {
 
         DrawTexture(dinoTexture, dinos[i]->x, dinos[i]->y, RAYWHITE);
 
-        Rectangle **recs = dinoGetRectangles(dinos[i]);
+        Rectangle **recs = dinos[i]->bounds;
         for(int i = 0; i < 3; i++) {
             Rectangle *r = recs[i];
             DrawRectangle(r->x, r->y, r->width, r->height,  BLUE);
