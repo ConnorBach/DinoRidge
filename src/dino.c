@@ -22,7 +22,6 @@ Dino *dinoCreate(size_t x, size_t y, DinoType type) {
 
 /* Moves dino towards player based on type */
 void dinoChase(Dino *dino, Player *player) {
-    printf("dino chase type: %d\n", dino->type);
     switch(dino->type) {
         case GreenRaptor:
             greenRaptorChase(dino, player);
@@ -52,30 +51,36 @@ void greenRaptorChase(Dino *dino, Player *player) {
 
 /* chases player if you are in it's territory */
 void blueRaptorChase(Dino *dino, Player *player) {
-    Vector2 playerPos = { player->x, player->y };
+    //Vector2 playerPos = { player->x, player->y };
+    Vector2 *playerPos = dinoGetAdjustedPlayerPos(player);
     Vector2 homeLocation = { dino->home_x, dino->home_y };
-    if(CheckCollisionPointCircle(playerPos, homeLocation, 500)) {
-        dinoMove(dino, playerPos);
+    if(CheckCollisionPointCircle(*playerPos, homeLocation, 500)) {
+        dinoMove(dino, *playerPos);
     } else {
         dinoMove(dino, homeLocation);
     }
+    free(playerPos);
 }
 
 /* chases towards player if nearby */
 void orangeBrontChase(Dino *dino, Player *player) {
-    Vector2 playerPos = { player->x, player->y };
+    //Vector2 playerPos = { player->x, player->y };
+    Vector2 *playerPos = dinoGetAdjustedPlayerPos(player);
     Vector2 homeLocation = { dino->home_x, dino->home_y };
-    if(CheckCollisionPointCircle(playerPos, homeLocation, 300)) {
-        dinoMove(dino, playerPos);
+    if(CheckCollisionPointCircle(*playerPos, homeLocation, 300)) {
+        dinoMove(dino, *playerPos);
     } else {
         dinoMove(dino, homeLocation);
     }
+    free(playerPos);
 }
 
 /* TRex Chases towards the player */
 void purpleRexChase(Dino *dino, Player *player) {
-    Vector2 playerPos = { player->x, player->y };
-    dinoMove(dino, playerPos);
+    //Vector2 playerPos = { player->x, player->y };
+    Vector2 *playerPos = dinoGetAdjustedPlayerPos(player);
+    dinoMove(dino, *playerPos);
+    free(playerPos);
 }
 
 void dinoMove(Dino *dino, Vector2 point) {
@@ -182,4 +187,11 @@ void dinoFree(Dino *d) {
         free(d->bounds[i]);
     }
     free(d);
+}
+
+Vector2 *dinoGetAdjustedPlayerPos(Player *p) {
+    Vector2 *pos = malloc(sizeof(Vector2));
+    pos->x = p->x - 100;
+    pos->y = p->y - 100;
+    return pos;
 }

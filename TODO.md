@@ -12,7 +12,8 @@
 * add damage for collisions (DONE)
 
 * Game Over / Start Again (DONE)
-* Dinos chase player not top left of player
+* add bounding to screen
+* Dinos chase player not top left of player (DONE)
 
 ## Extra stuff
 * changing background

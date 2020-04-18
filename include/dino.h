@@ -31,5 +31,6 @@ void purpleRexChase(Dino *dino, Player *player);
 void dinoMove(Dino *dino, Vector2 point);
 void dinoFree(Dino *dino);
 Rectangle **dinoGetRectangles(Dino *d);
+Vector2 *dinoGetAdjustedPlayerPos(Player *p);
 
 #endif
