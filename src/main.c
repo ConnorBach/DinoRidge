@@ -10,6 +10,7 @@ int main() {
 	// Initialization
     screenWidth = GetScreenWidth();
     screenHeight = GetScreenHeight();
+    printf("####### %d %d #########\n", GetScreenWidth(), GetScreenHeight());
 
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);    // Window configuration flags
 	InitWindow(screenWidth, screenHeight, "Dino Ridge");

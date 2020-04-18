@@ -5,16 +5,19 @@
 * Scale based on screen size (DONE)
 * reduce the size of texture (DONE)
 * add dino chase AI
-* animate dinos
-* sound effects for collisions
-* menu for character selection
 * hp bar
 * score (based on time)
 * add music
+* menu for character selection
+* camera centered on player
+* bigger world
+
 
 ## Extra stuff
 * changing background
 * add more dinos or increase dino speed
+* animate sprites
+* sound effects for collisions
 
 ## Deploying
 Compile on Windows
