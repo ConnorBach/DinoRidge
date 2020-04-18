@@ -9,8 +9,9 @@
 * hp bar (DONE)
 * play/pause music (DONE)
 * add dino chase AI (DONE)
-* add damage for collisions
+* add damage for collisions (DONE)
 * menu for character selection
+* Game Over / Start Again
 
 * bigger world
 * camera centered on player

@@ -150,7 +150,7 @@ Rectangle **dinoGetRectangles(Dino *d) {
             tail->x = d->x + 20;
             tail->y = d->y + 140;
             tail->width = 150;
-            tail->height = 100;
+            tail->height = 80;
             break;
         case PurpleRex:
             head->x = d->x + 130;
