@@ -10,6 +10,7 @@ extern int screenHeight;
 
 int n_dinos = 5;
 int pause = 0;
+int gameOverScore = 0;
 
 Texture2D playerTexture;
 Texture2D greenRaptorTexture;
@@ -145,6 +146,7 @@ void Update(GameState *state) {
 
                 if(state->player->hp == 0) {
                     state->gameOver = 1;
+                    gameOverScore = gameOverScore == 0 ? state->score : gameOverScore;
                 }
             }
         }
@@ -215,9 +217,11 @@ void Draw(GameState *state) {
     DrawRectangleLines(.9 * screenWidth, .05 * screenHeight, .1 * screenWidth, .05 * screenHeight, BLACK);
 
     /* Draw Score */
-    int len = snprintf(NULL, 0, "Score: %d", state->score);
+    int curScore = state->gameOver ? gameOverScore : state->score;
+    printf("curScore: %d\n", curScore);
+    int len = snprintf(NULL, 0, "Score: %d", curScore);
     char *score = malloc(sizeof(char)*len+1);
-    snprintf(score, len+1, "Score: %d", state->score);
+    snprintf(score, len+1, "Score: %d", curScore);
     DrawText(score, .9 * screenWidth, .1 * screenHeight, 20, BLACK);
     free(score);
 
@@ -237,6 +241,7 @@ void CleanUp(GameState *state) {
 void Reset(GameState *state) {
 	// setup game state
     state->gameOver = 0;
+    gameOverScore = 0;
 
     // reset player
     state->player->x = screenWidth / 2;
