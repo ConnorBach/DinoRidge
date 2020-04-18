@@ -47,8 +47,11 @@ GameState *InitGameState() {
 	state->player = p;
     playerUpdatePercentHP(p);
 
+    // always need one t rex to make it interesting
 	Dino **dinos = malloc(sizeof(Dino) * n_dinos);
-	for(int i = 0; i < n_dinos; i++) {
+    dinos[0] = dinoCreate(GetRandomValue(0, 800), GetRandomValue(0, 450), PurpleRex);
+
+	for(int i = 1; i < n_dinos; i++) {
 		dinos[i] = dinoCreate(GetRandomValue(0, 800), GetRandomValue(0, 450), GetRandomValue(0, 3));
 	}
 	state->dinos = dinos;
@@ -66,6 +69,11 @@ GameState *InitGameState() {
 
 /* Update Game State */
 void Update(GameState *state) {
+    /* Reset Game */
+    if(IsKeyDown(KEY_SPACE) && state->gameOver == 1) {
+        Reset(state);
+    }
+
     /* Update screen width/height if resized*/
     screenWidth = GetScreenWidth();
     screenHeight = GetScreenHeight();
@@ -88,21 +96,27 @@ void Update(GameState *state) {
 	if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) state->player->y -= 2.0f;
 	if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) state->player->y += 2.0f;
 
-    if(IsKeyDown(KEY_SPACE) && state->gameOver == 1) {
-        Reset(state);
-    }
 
     state->player->bound = playerGetRectangle(state->player);
+
+    printf("after state player bound\n");
 
     /* have camera follow player */
 
     /* update dino position */
     Dino **dinos = state->dinos;
 
+    printf("state dino\n");
+
     for(int i = 0; i < n_dinos; i++) {
         dinoChase(dinos[i], state->player); 
+        printf("dino chase\n");
         dinos[i]->bounds = dinoGetRectangles(dinos[i]);
+        printf("dino bounds\n");
     }
+
+    printf("dino position, bounds\n");
+
 
     /* check for collisions, lower player hp */
     for(int i = 0; i < n_dinos; i++) {
@@ -156,7 +170,7 @@ void Draw(GameState *state) {
         Player *player = state->player;
         DrawTexture(playerTexture, player->x, player->y, RAYWHITE);
         Rectangle *bound = state->player->bound;
-        DrawRectangle(bound->x, bound->y, bound->width, bound->height, RED);
+        //DrawRectangle(bound->x, bound->y, bound->width, bound->height, RED);
 
         Dino **dinos = state->dinos;
         for(int i = 0; i < n_dinos; i++) {
@@ -178,11 +192,11 @@ void Draw(GameState *state) {
 
             DrawTexture(dinoTexture, dinos[i]->x, dinos[i]->y, RAYWHITE);
 
-            Rectangle **recs = dinos[i]->bounds;
+            /*Rectangle **recs = dinos[i]->bounds;
             for(int i = 0; i < 3; i++) {
                 Rectangle *r = recs[i];
-                DrawRectangle(r->x, r->y, r->width, r->height,  BLUE);
-            }
+                //DrawRectangle(r->x, r->y, r->width, r->height,  BLUE);
+            }*/
         }
 
         //EndMode2D();
@@ -234,10 +248,13 @@ void Reset(GameState *state) {
 	for(int i = 0; i < n_dinos; i++) {
         dinoFree(state->dinos[i]);
     }
+    free(state->dinos);
 
     // new random dinos
 	Dino **dinos = malloc(sizeof(Dino) * n_dinos);
-	for(int i = 0; i < n_dinos; i++) {
+    dinos[0] = dinoCreate(GetRandomValue(0, 800), GetRandomValue(0, 450), PurpleRex);
+
+	for(int i = 1; i < n_dinos; i++) {
 		dinos[i] = dinoCreate(GetRandomValue(0, 800), GetRandomValue(0, 450), GetRandomValue(0, 3));
 	}
 	state->dinos = dinos;

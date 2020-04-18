@@ -11,10 +11,8 @@
 * add dino chase AI (DONE)
 * add damage for collisions (DONE)
 
-* Game Over / Start Again
-
-* bigger world
-* camera centered on player
+* Game Over / Start Again (DONE)
+* Dinos chase player not top left of player
 
 ## Extra stuff
 * changing background

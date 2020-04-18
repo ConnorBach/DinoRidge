@@ -22,6 +22,7 @@ Dino *dinoCreate(size_t x, size_t y, DinoType type) {
 
 /* Moves dino towards player based on type */
 void dinoChase(Dino *dino, Player *player) {
+    printf("dino chase type: %d\n", dino->type);
     switch(dino->type) {
         case GreenRaptor:
             greenRaptorChase(dino, player);
