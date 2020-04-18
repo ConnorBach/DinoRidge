@@ -6,7 +6,8 @@
 * reduce the size of texture (DONE)
 * add music (DONE)
 * score (based on time) (DONE)
-* hp bar
+* hp bar (DONE)
+* play/pause music (DONE)
 * add dino chase AI
 * add damage for collisions
 * menu for character selection

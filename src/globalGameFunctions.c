@@ -9,6 +9,7 @@ extern int screenWidth;
 extern int screenHeight;
 
 int n_dinos = 5;
+int pause = 0;
 
 Texture2D playerTexture;
 Texture2D greenRaptorTexture;
@@ -69,6 +70,15 @@ void Update(GameState *state) {
 
     /* Update music */
     UpdateMusicStream(chaseMusic);
+
+    // Pause/Resume music playing
+    if (IsKeyPressed(KEY_P))
+    {
+        pause = !pause;
+
+        if (pause) PauseMusicStream(chaseMusic);
+        else ResumeMusicStream(chaseMusic);
+    }
 
 	/* read user input, update player position */
 	if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) state->player->x += 2.0f;
