@@ -4,6 +4,9 @@
 #include "globalGameFunctions.h"
 #include "player.h"
 
+extern int screenWidth;
+extern int screenHeight;
+
 int n_dinos = 5;
 
 Texture2D playerTexture;
@@ -26,7 +29,7 @@ GameState *InitGameState() {
 	// setup game state
 	GameState *state = malloc(sizeof(GameState));
 
-	Player *p = playerCreate(20, 200, 100);
+	Player *p = playerCreate(.1 * screenWidth, 200, 100);
 	state->player = p;
 
 	Dino **dinos = malloc(sizeof(Dino) * n_dinos);
@@ -40,6 +43,11 @@ GameState *InitGameState() {
 
 /* Update Game State */
 void Update(GameState *state) {
+    /* Update screen width/height if resized*/
+    screenWidth = GetScreenWidth();
+    screenHeight = GetScreenHeight();
+
+
 	/* read user input, update player position */
 	if (IsKeyDown(KEY_RIGHT)) state->player->x += 2.0f;
 	if (IsKeyDown(KEY_LEFT)) state->player->x -= 2.0f;
@@ -56,7 +64,7 @@ void Update(GameState *state) {
 void Draw(GameState *state) {
 	BeginDrawing();
 
-	ClearBackground(RAYWHITE);
+	ClearBackground(GREEN);
 
 	Player *player = state->player;
 	DrawTexture(playerTexture, player->x, player->y, RAYWHITE);

@@ -3,11 +3,15 @@
 #include "globalGameFunctions.h"
 #include "player.h"
 
+int screenWidth;
+int screenHeight;
+
 int main() {
 	// Initialization
-	const int screenWidth = 800;
-	const int screenHeight = 450;
+    screenWidth = GetScreenWidth();
+    screenHeight = GetScreenHeight();
 
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE);    // Window configuration flags
 	InitWindow(screenWidth, screenHeight, "Dino Ridge");
 
 	SetTargetFPS(60);               
