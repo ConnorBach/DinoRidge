@@ -14,6 +14,8 @@ typedef enum DinoType {
 typedef struct Dino {
     size_t x;
     size_t y;
+    size_t home_x;
+    size_t home_y;
     enum DinoType type;
 } Dino;
 
@@ -24,5 +26,6 @@ void greenRaptorChase(Dino *dino, Player *player);
 void blueRaptorChase(Dino *dino, Player *player);
 void orangeBrontChase(Dino *dino, Player *player);
 void purpleRexChase(Dino *dino, Player *player);
+void dinoMove(Dino *dino, Vector2 point);
 
 #endif

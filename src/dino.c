@@ -6,6 +6,8 @@ Dino *dinoCreate(size_t x, size_t y, DinoType type) {
     Dino *dino = malloc(sizeof(Dino));
     dino->x = x;
     dino->y = y;
+    dino->home_x = x;
+    dino->home_y = y;
     dino->type = type;
     return dino;
 }
@@ -38,21 +40,34 @@ void greenRaptorChase(Dino *dino, Player *player) {
 void blueRaptorChase(Dino *dino, Player *player) {
 }
 
+/* chases towards player if nearby */
 void orangeBrontChase(Dino *dino, Player *player) {
+    Vector2 playerPos = { player->x, player->y };
+    Vector2 homeLocation = { dino->home_x, dino->home_y };
+    if(CheckCollisionPointCircle(playerPos, homeLocation, 300)) {
+        dinoMove(dino, playerPos);
+    } else {
+        dinoMove(dino, homeLocation);
+    }
 }
 
 /* TRex Chases towards the player */
 void purpleRexChase(Dino *dino, Player *player) {
+    Vector2 playerPos = { player->x, player->y };
+    dinoMove(dino, playerPos);
+}
+
+void dinoMove(Dino *dino, Vector2 point) {
     int dirX = 0, dirY = 0;
 
     //printf("X - X: %d", player->x - dino->x);
-    if(player->x > dino->x) {
+    if(point.x > dino->x) {
         dirX = 1;
     } else {
         dirX = -1;
     }
 
-    if(player->y > dino->y) {
+    if(point.y > dino->y) {
         dirY = 1;
     } else {
         dirY = -1;
@@ -61,4 +76,3 @@ void purpleRexChase(Dino *dino, Player *player) {
     dino->x += dirX;
     dino->y += dirY;
 }
-
