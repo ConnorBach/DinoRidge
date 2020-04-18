@@ -2,6 +2,9 @@
 #include "dino.h"
 #include "player.h"
 
+extern int screenWidth;
+extern int screenHeight;
+
 Dino *dinoCreate(size_t x, size_t y, DinoType type) {
     Dino *dino = malloc(sizeof(Dino));
     dino->x = x;
@@ -9,6 +12,9 @@ Dino *dinoCreate(size_t x, size_t y, DinoType type) {
     dino->home_x = x;
     dino->home_y = y;
     dino->type = type;
+
+    Vector2 dst = { GetRandomValue(0, screenWidth), GetRandomValue(0, screenHeight) };
+    dino->greenRaptorDest = dst;
     return dino;
 }
 
@@ -30,14 +36,26 @@ void dinoChase(Dino *dino, Player *player) {
     }
 }
 
+/* moves around to random locations */
 void greenRaptorChase(Dino *dino, Player *player) {
-    int dirX = GetRandomValue(-1, 1), dirY = GetRandomValue(-1, 1);
+    if(dino->x != dino->greenRaptorDest.x || dino->y != dino->greenRaptorDest.y) {
+    } else {
+        Vector2 dest = { GetRandomValue(0, screenWidth), GetRandomValue(0, screenHeight) };
+        dino->greenRaptorDest = dest;
+    }
 
-    dino->x += dirX;
-    dino->y += dirY;
+    dinoMove(dino, dino->greenRaptorDest);
 }
 
+/* chases player if you are in it's territory */
 void blueRaptorChase(Dino *dino, Player *player) {
+    Vector2 playerPos = { player->x, player->y };
+    Vector2 homeLocation = { dino->home_x, dino->home_y };
+    if(CheckCollisionPointCircle(playerPos, homeLocation, 500)) {
+        dinoMove(dino, playerPos);
+    } else {
+        dinoMove(dino, homeLocation);
+    }
 }
 
 /* chases towards player if nearby */

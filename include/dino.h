@@ -16,6 +16,7 @@ typedef struct Dino {
     size_t y;
     size_t home_x;
     size_t home_y;
+    Vector2 greenRaptorDest;
     enum DinoType type;
 } Dino;
 
