@@ -14,7 +14,6 @@
 * bigger world
 * camera centered on player
 
-
 ## Extra stuff
 * changing background
 * add more dinos or increase dino speed

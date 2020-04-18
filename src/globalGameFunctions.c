@@ -134,8 +134,9 @@ void Draw(GameState *state) {
     /* Draw UI */
 
     /* Draw HP bar */
-    DrawRectangleLines(.9 * screenWidth, .05 * screenHeight, .1 * screenWidth, .05 * screenHeight, BLACK);
-    DrawRectangle(.9 * screenWidth, .05 * screenHeight, .1 * screenWidth - 4, .05 * screenHeight - 4, RED);
+    //float playerPercent = state->player->hp / state->player->max_hp;
+    //DrawRectangleLines(.9 * screenWidth, .05 * screenHeight, .1 * screenWidth, .05 * screenHeight, BLACK);
+    //DrawRectangle(.9 * screenWidth, .05 * screenHeight, .1 * screenWidth - 4, .05 * screenHeight - 4, RED);
 
     /* Draw Score */
     int len = snprintf(NULL, 0, "Score: %d", state->score);
