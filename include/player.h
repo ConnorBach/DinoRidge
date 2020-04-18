@@ -5,13 +5,16 @@
 #include <stdlib.h>
 
 typedef struct Player {
-    size_t x;
-    size_t y;
-    size_t hp;
-    size_t max_hp;
+    int x;
+    int y;
+    int hp;
+    int max_hp;
+    float percent_hp;
 } Player;
 
 Player *playerCreate(int x, int y, int hp, int max_hp);
 void playerMove(Player *p, size_t x, size_t y);
+void playerUpdateHP(Player *p, int change);
+void playerUpdatePercentHP(Player *p);
 
 #endif

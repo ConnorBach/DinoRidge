@@ -40,7 +40,7 @@ GameState *InitGameState() {
 	// setup game state
 	GameState *state = malloc(sizeof(GameState));
 
-    printf(" ====== %d %d ======\n", screenWidth, screenHeight);
+    //printf(" ====== %d %d ======\n", screenWidth, screenHeight);
 	Player *p = playerCreate(screenWidth / 2, screenHeight/ 2, 100, 100);
 	state->player = p;
 
@@ -71,12 +71,13 @@ void Update(GameState *state) {
     UpdateMusicStream(chaseMusic);
 
 	/* read user input, update player position */
-    Player *player = state->player;
 	if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) state->player->x += 2.0f;
 	if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) state->player->x -= 2.0f;
 	if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) state->player->y -= 2.0f;
 	if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) state->player->y += 2.0f;
 
+    if(IsKeyDown(KEY_J)) playerUpdateHP(state->player, -5);
+    if(IsKeyDown(KEY_K)) playerUpdateHP(state->player, 5);
 
     /* have camera follow player */
 
@@ -84,11 +85,11 @@ void Update(GameState *state) {
     Dino **dinos = state->dinos;
 
     for(int i = 0; i < n_dinos; i++) {
-        dinoChase(dinos[i], player); 
+        dinoChase(dinos[i], state->player); 
     }
 
-
     /* check for collisions, lower player hp */
+    playerUpdatePercentHP(state->player);
 
 
     /* update score */
@@ -134,9 +135,14 @@ void Draw(GameState *state) {
     /* Draw UI */
 
     /* Draw HP bar */
-    //float playerPercent = state->player->hp / state->player->max_hp;
-    //DrawRectangleLines(.9 * screenWidth, .05 * screenHeight, .1 * screenWidth, .05 * screenHeight, BLACK);
-    //DrawRectangle(.9 * screenWidth, .05 * screenHeight, .1 * screenWidth - 4, .05 * screenHeight - 4, RED);
+    float hp_bar_width = state->player->percent_hp * (.1 * screenWidth - 4);
+
+    printf("percent_hp: %f, hp_bar_width: %f\n", state->player->percent_hp, hp_bar_width);
+
+    DrawRectangle(.9 * screenWidth, .05 * screenHeight, hp_bar_width, .05 * screenHeight - 4, RED);
+
+    /* Draw HP Bar outline */
+    DrawRectangleLines(.9 * screenWidth, .05 * screenHeight, .1 * screenWidth, .05 * screenHeight, BLACK);
 
     /* Draw Score */
     int len = snprintf(NULL, 0, "Score: %d", state->score);

@@ -45,7 +45,7 @@ void orangeBrontChase(Dino *dino, Player *player) {
 void purpleRexChase(Dino *dino, Player *player) {
     int dirX = 0, dirY = 0;
 
-    printf("X - X: %d", player->x - dino->x);
+    //printf("X - X: %d", player->x - dino->x);
     if(player->x > dino->x) {
         dirX = 1;
     } else {
