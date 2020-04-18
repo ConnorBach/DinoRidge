@@ -4,7 +4,10 @@
 #include <stdlib.h>
 
 typedef enum DinoType {
-    Raptor
+    GreenRaptor,
+    BlueRaptor,
+    OrangeBront,
+    PurpleRex
 } DinoType;
 
 typedef struct Dino {

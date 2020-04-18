@@ -4,6 +4,8 @@
 #include "globalGameFunctions.h"
 #include "player.h"
 
+int n_dinos = 5;
+
 Texture2D playerTexture;
 Texture2D raptorTexture;
 
@@ -11,36 +13,48 @@ Texture2D raptorTexture;
  * Called to setup game
  * */
 GameState *InitGameState() {
-    //load textures 
-    playerTexture = LoadTexture("../assets/dino1.png");
-    raptorTexture = LoadTexture("../assets/dino1.png");
+	//load textures 
+	playerTexture = LoadTexture("../assets/PlayerCharacter.png");
+	raptorTexture = LoadTexture("../assets/dino1.png");
 
-    // setup game state
-    GameState *state = malloc(sizeof(GameState));
+	// setup game state
+	GameState *state = malloc(sizeof(GameState));
 
-    Player *p = playerCreate(20, 350, 100);
-    state->player = p;
+	Player *p = playerCreate(20, 200, 100);
+	state->player = p;
 
-    for(int i = 0; i < 5; i++) {
-        //dinoCreate(GetRandomValue(0, 800), GetRandomValue(0, 450), Raptor)
-    }
+	Dino **dinos = malloc(sizeof(Dino) * n_dinos);
+	for(int i = 0; i < n_dinos; i++) {
+		dinos[i] = dinoCreate(GetRandomValue(0, 800), GetRandomValue(0, 450), GreenRaptor);
+	}
+	state->dinos = dinos;
 
-    return state;
+	return state;
 }
 
 /* Update Game State */
 void Update(GameState *state) {
+	/* read user input, update player position */
+	if (IsKeyDown(KEY_RIGHT)) state->player->x += 2.0f;
+	if (IsKeyDown(KEY_LEFT)) state->player->x -= 2.0f;
+	if (IsKeyDown(KEY_UP)) state->player->y -= 2.0f;
+	if (IsKeyDown(KEY_DOWN)) state->player->y += 2.0f;
+
+    /* update dino position */
+
+
+    /* check for collisions, lower player hp */
 }
 
 /* Draw Game state */
 void Draw(GameState *state) {
-    BeginDrawing();
+	BeginDrawing();
 
-    ClearBackground(RAYWHITE);
+	ClearBackground(RAYWHITE);
 
-    Player *player = state->player;
+	Player *player = state->player;
 
-    DrawTexture(playerTexture, player->x, player->y, RAYWHITE);
+	DrawTexture(playerTexture, player->x, player->y, RAYWHITE);
 
-    EndDrawing();
+	EndDrawing();
 }
