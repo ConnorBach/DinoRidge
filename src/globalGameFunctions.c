@@ -15,6 +15,8 @@ Texture2D blueRaptorTexture;
 Texture2D orangeBrontTexture;
 Texture2D purpleRexTexture;
 
+Music chaseMusic;
+
 /* Init 
  * Called to setup game
  * */
@@ -28,6 +30,10 @@ GameState *InitGameState() {
 	orangeBrontTexture= LoadTexture("../assets/dino3.png");
 	purpleRexTexture = LoadTexture("../assets/dino4.png");
 
+    // load and start music
+    //chaseMusic = LoadMusicStream("../assets/ChaseMusic.ogg");
+    //PlayMusicStream(chaseMusic);
+
 	// setup game state
 	GameState *state = malloc(sizeof(GameState));
 
@@ -40,6 +46,8 @@ GameState *InitGameState() {
 	}
 	state->dinos = dinos;
 
+    InitAudioDevice();
+
 	return state;
 }
 
@@ -49,12 +57,14 @@ void Update(GameState *state) {
     screenWidth = GetScreenWidth();
     screenHeight = GetScreenHeight();
 
+    /* Update music */
+    //UpdateMusicStream(chaseMusic);
 
 	/* read user input, update player position */
-	if (IsKeyDown(KEY_RIGHT)) state->player->x += 2.0f;
-	if (IsKeyDown(KEY_LEFT)) state->player->x -= 2.0f;
-	if (IsKeyDown(KEY_UP)) state->player->y -= 2.0f;
-	if (IsKeyDown(KEY_DOWN)) state->player->y += 2.0f;
+	if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) state->player->x += 2.0f;
+	if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) state->player->x -= 2.0f;
+	if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) state->player->y -= 2.0f;
+	if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) state->player->y += 2.0f;
 
     /* update dino position */
 
@@ -64,6 +74,8 @@ void Update(GameState *state) {
 
 /* Draw Game state */
 void Draw(GameState *state) {
+
+    /* Render */
 	BeginDrawing();
 
 	ClearBackground(GREEN);
@@ -93,4 +105,13 @@ void Draw(GameState *state) {
     }
 
 	EndDrawing();
+}
+
+/* Cleans up game state and globals in this file */
+void CleanUp(GameState *state) {
+    /* clean up music */
+    //UnloadMusicStream(chaseMusic);
+    //CloseAudioDevice();
+
+    /* clean up game state */
 }

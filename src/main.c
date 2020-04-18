@@ -14,6 +14,8 @@ int main() {
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);    // Window configuration flags
 	InitWindow(screenWidth, screenHeight, "Dino Ridge");
 
+    //InitAudioDevice();
+
 	SetTargetFPS(60);               
 
     // Create initial game state
@@ -28,6 +30,7 @@ int main() {
 		// Draw
         Draw(state);
 	}
+    CleanUp(state);
 
 	// De-Initialization
 	CloseWindow();

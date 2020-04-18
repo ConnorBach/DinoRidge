@@ -14,5 +14,6 @@ typedef struct GameState {
 GameState *InitGameState();
 void Update(GameState *state);
 void Draw(GameState *state);
+void CleanUp(GameState *state);
 
 #endif
