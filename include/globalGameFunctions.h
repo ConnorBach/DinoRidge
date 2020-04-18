@@ -8,6 +8,7 @@
 typedef struct GameState {
     Player *player;
     Dino **dinos;
+    int score;
 } GameState;
 
 

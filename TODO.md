@@ -4,13 +4,14 @@
 * Create background (DONE)
 * Scale based on screen size (DONE)
 * reduce the size of texture (DONE)
+* add music (DONE)
 * add dino chase AI
 * hp bar
 * score (based on time)
-* add music
 * menu for character selection
-* camera centered on player
+
 * bigger world
+* camera centered on player
 
 
 ## Extra stuff

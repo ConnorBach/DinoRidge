@@ -1,4 +1,5 @@
 #include <raylib.h>
+#include <stdio.h>
 
 #include "dino.h"
 #include "globalGameFunctions.h"
@@ -16,6 +17,8 @@ Texture2D orangeBrontTexture;
 Texture2D purpleRexTexture;
 
 Music chaseMusic;
+
+Camera2D camera = {0};
 
 /* Init 
  * Called to setup game
@@ -47,6 +50,14 @@ GameState *InitGameState() {
 	}
 	state->dinos = dinos;
 
+    state->score = 0;
+
+    //setup camera
+    camera.target = (Vector2){ p->x, p->y };
+    camera.offset = (Vector2){ screenWidth / 2, screenHeight / 2 };
+    camera.rotation = 0.0f;
+    camera.zoom = 1.0f;
+
 	return state;
 }
 
@@ -66,6 +77,9 @@ void Update(GameState *state) {
 	if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) state->player->y -= 2.0f;
 	if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) state->player->y += 2.0f;
 
+
+    /* have camera follow player */
+
     /* update dino position */
     Dino **dinos = state->dinos;
 
@@ -75,6 +89,10 @@ void Update(GameState *state) {
 
 
     /* check for collisions, lower player hp */
+
+
+    /* update score */
+    state->score++;
 }
 
 /* Draw Game state */
@@ -84,6 +102,8 @@ void Draw(GameState *state) {
 	BeginDrawing();
 
 	ClearBackground(GREEN);
+
+    //BeginMode2D(camera);
 
 	Player *player = state->player;
 	DrawTexture(playerTexture, player->x, player->y, RAYWHITE);
@@ -108,6 +128,15 @@ void Draw(GameState *state) {
 
         DrawTexture(dinoTexture, dinos[i]->x, dinos[i]->y, RAYWHITE);
     }
+
+    //EndMode2D();
+
+    /* Draw Score */
+    int len = snprintf(NULL, 0, "Score: %d", state->score);
+    char *score = malloc(sizeof(char)*len+1);
+    snprintf(score, len+1, "Score: %d", state->score);
+    DrawText(score, .9 * screenWidth, .1 * screenHeight, 20, BLACK);
+    free(score);
 
 	EndDrawing();
 }

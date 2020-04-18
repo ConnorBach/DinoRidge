@@ -29,6 +29,10 @@ void dinoChase(Dino *dino, Player *player) {
 }
 
 void greenRaptorChase(Dino *dino, Player *player) {
+    int dirX = GetRandomValue(-1, 1), dirY = GetRandomValue(-1, 1);
+
+    dino->x += dirX;
+    dino->y += dirY;
 }
 
 void blueRaptorChase(Dino *dino, Player *player) {
@@ -53,12 +57,6 @@ void purpleRexChase(Dino *dino, Player *player) {
     } else {
         dirY = -1;
     }
-
-    /*
-    printf("Player X, Y: %d, %d\n", player->x, player->y);
-    printf("Dino X, Y: %d, %d\n", dino->x, dino->y);
-    printf("Dir X, Y: %d, %d\n", dirX, dirY);
-    */
 
     dino->x += dirX;
     dino->y += dirY;

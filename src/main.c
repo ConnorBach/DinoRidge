@@ -3,17 +3,19 @@
 #include "globalGameFunctions.h"
 #include "player.h"
 
-int screenWidth;
-int screenHeight;
+int screenWidth = 1280;
+int screenHeight = 800;
 
 int main() {
 	// Initialization
-    screenWidth = GetScreenWidth();
-    screenHeight = GetScreenHeight();
-    printf("####### %d %d #########\n", GetScreenWidth(), GetScreenHeight());
 
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);    // Window configuration flags
 	InitWindow(screenWidth, screenHeight, "Dino Ridge");
+
+    //screenWidth = GetMonitorWidth(0);
+    //screenHeight = GetMonitorHeight(0);
+
+    printf("####### %d %d #########\n", GetScreenWidth(), GetScreenHeight());
 
     InitAudioDevice();
 
