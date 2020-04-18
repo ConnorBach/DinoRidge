@@ -5,9 +5,10 @@
 * Scale based on screen size (DONE)
 * reduce the size of texture (DONE)
 * add music (DONE)
+* score (based on time) (DONE)
+* hp bar (DONE)
 * add dino chase AI
-* hp bar
-* score (based on time)
+* add damage for collisions
 * menu for character selection
 
 * bigger world

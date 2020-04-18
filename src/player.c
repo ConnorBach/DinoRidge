@@ -1,6 +1,6 @@
 #include "player.h"
 
-Player *playerCreate(int x, int y, int hp) {
+Player *playerCreate(int x, int y, int hp, int max_hp) {
     Player *p = malloc(sizeof(Player)); 
     p->x =  x;
     p->y =  y;

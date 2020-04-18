@@ -41,7 +41,7 @@ GameState *InitGameState() {
 	GameState *state = malloc(sizeof(GameState));
 
     printf(" ====== %d %d ======\n", screenWidth, screenHeight);
-	Player *p = playerCreate(screenWidth / 2, screenHeight/ 2, 100);
+	Player *p = playerCreate(screenWidth / 2, screenHeight/ 2, 100, 100);
 	state->player = p;
 
 	Dino **dinos = malloc(sizeof(Dino) * n_dinos);
@@ -130,6 +130,12 @@ void Draw(GameState *state) {
     }
 
     //EndMode2D();
+    
+    /* Draw UI */
+
+    /* Draw HP bar */
+    DrawRectangleLines(.9 * screenWidth, .05 * screenHeight, .1 * screenWidth, .05 * screenHeight, BLACK);
+    DrawRectangle(.9 * screenWidth, .05 * screenHeight, .1 * screenWidth - 4, .05 * screenHeight - 4, RED);
 
     /* Draw Score */
     int len = snprintf(NULL, 0, "Score: %d", state->score);
