@@ -50,10 +50,14 @@ GameState *InitGameState() {
 
     // always need one t rex to make it interesting
 	Dino **dinos = malloc(sizeof(Dino) * n_dinos);
-    dinos[0] = dinoCreate(GetRandomValue(0, 800), GetRandomValue(0, 450), PurpleRex);
+    Vector2 dinoSpawn = dinoGetSpawn(p->x, p->y);
+    dinos[0] = dinoCreate(dinoSpawn.x, dinoSpawn.y, PurpleRex);
+    dinos[0]->bounds = dinoGetRectangles(dinos[0]);
 
 	for(int i = 1; i < n_dinos; i++) {
-		dinos[i] = dinoCreate(GetRandomValue(0, 800), GetRandomValue(0, 450), GetRandomValue(0, 3));
+        Vector2 dinoSpawn = dinoGetSpawn(p->x, p->y);
+        dinos[i] = dinoCreate(dinoSpawn.x, dinoSpawn.y, GetRandomValue(0, 2));
+        dinos[i]->bounds = dinoGetRectangles(dinos[i]);
 	}
 	state->dinos = dinos;
 
@@ -92,10 +96,10 @@ void Update(GameState *state) {
     }
 
 	/* read user input, update player position */
-	if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) state->player->x += 2.0f;
-	if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) state->player->x -= 2.0f;
-	if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) state->player->y -= 2.0f;
-	if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) state->player->y += 2.0f;
+	if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) playerMove(state->player, 2, 0);
+	if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) playerMove(state->player, -2, 0);
+	if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) playerMove(state->player, 0, -2);
+	if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) playerMove(state->player, 0, 2);
 
 
     state->player->bound = playerGetRectangle(state->player);
@@ -257,11 +261,16 @@ void Reset(GameState *state) {
 
     // new random dinos
 	Dino **dinos = malloc(sizeof(Dino) * n_dinos);
-    dinos[0] = dinoCreate(GetRandomValue(0, 800), GetRandomValue(0, 450), PurpleRex);
+    Vector2 dinoSpawn = dinoGetSpawn(state->player->x, state->player->y);
+    dinos[0] = dinoCreate(dinoSpawn.x, dinoSpawn.y, PurpleRex);
+    dinos[0]->bounds = dinoGetRectangles(dinos[0]);
 
 	for(int i = 1; i < n_dinos; i++) {
-		dinos[i] = dinoCreate(GetRandomValue(0, 800), GetRandomValue(0, 450), GetRandomValue(0, 3));
+        Vector2 dinoSpawn = dinoGetSpawn(state->player->x, state->player->y);
+        dinos[i] = dinoCreate(dinoSpawn.x, dinoSpawn.y, GetRandomValue(0, 2));
+        dinos[i]->bounds = dinoGetRectangles(dinos[i]);
 	}
+
 	state->dinos = dinos;
 
     state->score = 0;

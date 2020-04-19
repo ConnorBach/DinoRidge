@@ -1,4 +1,8 @@
+#include <stdio.h>
 #include "player.h"
+
+extern int screenWidth;
+extern int screenHeight;
 
 Player *playerCreate(int x, int y, int hp, int max_hp) {
     Player *p = malloc(sizeof(Player)); 
@@ -10,9 +14,14 @@ Player *playerCreate(int x, int y, int hp, int max_hp) {
     return p;
 }
 
-void playerMove(Player *p, size_t x, size_t y) {
-    p->x += x;
-    p->y += y;
+void playerMove(Player *p, int x, int y) {
+    if(p->x + x >= 0 && p->x + x <= screenWidth - 50) {
+        p->x += x;
+    }
+
+    if(p->y + y >= 0 && p->y + y <= screenHeight - 50) {
+        p->y += y;
+    }
 }
 
 void playerUpdateHP(Player *p, int change) {

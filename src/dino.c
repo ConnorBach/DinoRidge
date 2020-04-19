@@ -186,6 +186,7 @@ void dinoFree(Dino *d) {
     for(int i = 0; i < 3; i++) {
         free(d->bounds[i]);
     }
+    free(d->bounds);
     free(d);
 }
 
@@ -195,3 +196,17 @@ Vector2 *dinoGetAdjustedPlayerPos(Player *p) {
     pos->y = p->y - 100;
     return pos;
 }
+
+/* returns a random location not on the player spawn */
+Vector2 dinoGetSpawn(int px, int py) {
+    Vector2 loc = { GetRandomValue(0, screenWidth), GetRandomValue(0, screenHeight) };
+
+    while(loc.x < px + 100 &&  loc.y < py + 100) {
+        loc.x = GetRandomValue(0, screenWidth);
+        loc.y = GetRandomValue(0, screenHeight);
+    }
+
+    return loc;
+}
+
+

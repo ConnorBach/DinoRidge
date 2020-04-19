@@ -1,4 +1,5 @@
 #include <raylib.h>
+#include <stdio.h>
 
 #include "globalGameFunctions.h"
 #include "player.h"

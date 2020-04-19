@@ -32,5 +32,6 @@ void dinoMove(Dino *dino, Vector2 point);
 void dinoFree(Dino *dino);
 Rectangle **dinoGetRectangles(Dino *d);
 Vector2 *dinoGetAdjustedPlayerPos(Player *p);
+Vector2 dinoGetSpawn(int px, int py);
 
 #endif

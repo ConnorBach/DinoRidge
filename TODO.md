@@ -10,10 +10,10 @@
 * play/pause music (DONE)
 * add dino chase AI (DONE)
 * add damage for collisions (DONE)
-
 * Game Over / Start Again (DONE)
-* add bounding to screen
 * Dinos chase player not top left of player (DONE)
+* add bounding to screen for player (DONE)
+* spawn dinosaurs away from player (DONE)
 
 ## Extra stuff
 * changing background
@@ -21,6 +21,7 @@
 * animate sprites
 * sound effects for collisions
 * menu for character selection
+* tweak bounding boxes
 
 ## Deploying
 Compile on Windows
